@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "asset-preset-config-generator"
+version = "0.1.0"
+description = "Elastic Observability Toolset for generating asset preset from Elastic Agent Integration Package."
+authors = ["Agi K Thomas <agi.thomas@elastic.co>"]
+#readme = "README.md"
+packages = [{ include = "graph" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+python-dotenv = "^1.0.1"
+black = "^24.10.0"
+isort = "^5.13.2"
+langchain = "^0.3.7"
+langchain-openai = "^0.2.5"
+langgraph = "^0.2.45"
+grandalf = "^0.8"
+langchainhub = "^0.1.21"
+tavily-python = "^0.5.0"
+langchain-community = "^0.3.5"
+langchain-ollama = "^0.2.0"
+langchain-elasticsearch = "^0.3.0"
+pytest = "^8.3.3"
+langgraph-checkpoint-sqlite = "^2.0.1"
+langgraph-cli = "^0.1.53"
+mysql-connector-python = "^9.1.0"
+json-repair = "^0.30.2"
+langchain-experimental = "^0.3.3"
+neo4j = "^5.26.0"
+langchain-aws = "^0.2.9"
+
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

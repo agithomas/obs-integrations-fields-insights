@@ -1,0 +1,26 @@
+# Python files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# Poetry lock and cache
+poetry.lock
+.cache/
+.mypy_cache/
+.pytest_cache/
+
+# Environment files
+.env
+.env.*
+
+# Editor-specific files
+.vscode/
+*.swp
+.DS_Store
+
+

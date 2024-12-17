@@ -1,0 +1,14 @@
+{
+    "max_iterations_noop": 3,
+    "max_subtopics": 5,
+    "llm_temperature": 0.3,
+    "total_words": 800,
+    "max_search_results_per_query": 5,
+    "summary_token_limit": 200,
+    "strategic_llm": "openai:gpt-4o",
+    "smart_llm": "openai:gpt-4o-mini",
+    "fast_llm": "openai:gpt-4o-mini",
+    "strategic_llm_b": "bedrock:anthropic.claude-3-sonnet-20240229-v1:0",
+    "smart_llm_b": "bedrock:anthropic.claude-3-sonnet-20240229-v1:0",
+    "fast_llm_b": "bedrock:anthropic.claude-3-sonnet-20240229-v1:0"
+  }
