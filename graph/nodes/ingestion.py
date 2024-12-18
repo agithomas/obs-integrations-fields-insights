@@ -40,7 +40,7 @@ research_index = Elasticsearch(
 try:
     # Establish a connection to the MySQL database
     connection = mysql.connector.connect(
-        host="host.docker.internal",
+        host=host,
         user=user,
         password=password,
         database=database,
