@@ -32,8 +32,27 @@ llm = ChatOpenAI(model="gpt-4o", temperature=0)
 
 structured_llm_grader = llm.with_structured_output(AlertThreshold)
 
-prompt = hub.pull("rlm/rag-prompt")
+#prompt = hub.pull("rlm/rag-prompt")
+system = """
+You are a helpful site reliability engineer and has knowledge on Observability alert and slo configurations. Your responsibility is to go through the context and advice on the alert thresholds and slo configurations. 
+Use the following pieces of retrieved context to answer the question. 
 
+Help the user by
+- Identifying name of metric, description of a metric.
+- If the name of the metric is not available but description is available, create a metric name that is easy to understand.
+- Determine if there are any related metrics 
+- Formulate an alert warning threshold formula using one or more metrics. Represent using the metric names.
+- Formulate an alert critical threshould formula using one or more metrics. Represent using metric names.
+- Determine if the historical value of the metrics needs to be taken into consideration to determine the alert threshold value. 
+- Formulate an SLO with SLI configurations using the using the metrics. 
+
+If you don't know the answer, just say that you don't know.
+"""
+human = """
+Question: {question} 
+Context: {context} 
+Answer:
+"""
 # system = """You are an observability domain researcher evaluating whether the research document contains information on alert warning and critical thresholds. Return 'True' if either threshold is present, otherwise return 'False'.
 # Extract the values for both warning and critical thresholds. 
 # If the alert warning details is not present in the research document, the warning threshold value is -1. 
@@ -50,10 +69,10 @@ prompt = hub.pull("rlm/rag-prompt")
 #     ("human", "Research Document:\n\n{research_document}\n\n Question: \n\n {question}\n"),
 # ])
 
-# prompt = ChatPromptTemplate.from_messages([
-#     ("system", system),
-#     ("human", "Research Document:\n\n{research_document}\n\n Question: \n\n {question}\n"),
-# ])
+prompt = ChatPromptTemplate.from_messages([
+    ("system", system),
+    ("human", human)
+])
 
 
 alert_threshold_generator: RunnableSequence = prompt | structured_llm_grader
