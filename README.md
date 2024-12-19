@@ -107,6 +107,36 @@ Ready!
 
 Use the `https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:8123` to access the langgraph studio's Web UI for testing.
 
+## Connecting research report data with Elastic's Observability AI Assistant (Optional)
+
+Elastic search connectors offers Elastic connectors to sync the data from a variety of sources. The  data stored in the MySQL instance created as part of the framework run can be sync-ed up with Elasticsearch using the [ES Connector for MySQL](https://www.elastic.co/guide/en/elasticsearch/reference/current/es-connectors-mysql.html). 
+
+- Clone the repo : https://github.com/elastic/connectors
+- Login to Kibana, Go to Search -> Content -> Connectors. 
+  - Configure a new connector.
+  - Mention the name of an index. This is the index that will have the data of the sync-ed data from MySQL instance. 
+      - Example : `obs_assistant_asset_preset_mysql`
+  - Provide the connectivity and authentication details.
+- Update the config.yml as
+  ```
+    connectors:
+    -
+      connector_id: "<connector-id>"
+      service_type: "mysql"
+
+    elasticsearch:
+      host: "<elasticsearch endpoint>"
+      api_key: "<elastisearch api key>"
+  ```
+- `cd connectors && make run`
+- Configure AI Assistant Settings (Optional)
+  - Go to Kibana -> Observability -> Overview
+  - Select AI Assistant Settings
+  - Enter the name of the Search connector index pattern.
+     - Example : `obs_assistant_asset_preset_mysql`
+
+- Follow the steps to [connect AI assistant with search connector](https://www.elastic.co/guide/en/observability/current/obs-ai-assistant.html#obs-ai-search-connectors) and perform the sync operation.
+
 ## Troubleshooting
 
 ### Connectivity issue
