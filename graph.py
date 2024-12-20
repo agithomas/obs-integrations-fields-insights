@@ -7,36 +7,21 @@ from graph.nodes import configuration
 from graph.state import GraphState
 #import sqlite3
 from langgraph.errors import NodeInterrupt
-
+import uuid
 #import os
-
-
 #FORCE_RESEARCH_FLAG = os.getenv('FORCE_RESEARCH_WITHOUT_CONFIRMATION') or "N"
-
-
 #conn = sqlite3.connect("checkpoints.sqlite", check_same_thread=False)
 #memory = SqliteSaver(conn=conn)
 memory= MemorySaver()
 thread = {
     "configurable": {
-        "thread_id": "41"
+        "thread_id": str(uuid.uuid4())
     }
 }
-
-# user_input = {
-#     "field_name": "oracle.tablespace.space.used.bytes",
-#     "field_description": "Tablespace used space, in bytes."
-# }
 
 
 def prepare_retriever_question(state: GraphState):
     print("--- Preparing Retriever Question ---")
-    # return {
-    #     "question": """What is the alert warning and critical threshold?  
-    #     What is the reference value, capacity, metric to compare, for defining the alert threshold?
-    #     Should the historical value of the metrics be considered for setting alert thresholds?""",
-    #     #"force_research": FORCE_RESEARCH_FLAG,
-    # }
     return {
         "question": """Define the alert's warning and critical thresholds, specifying the reference value, capacity, and metric used for comparison. Provide the names of the metrics, any related metrics, and the burn rate associated with the SLO. Explain whether historical metric data should be considered when setting these thresholds and how it impacts accuracy.""",
         #"force_research": FORCE_RESEARCH_FLAG,
@@ -104,10 +89,6 @@ builder.add_node(OBS_FIELD_RESEARCHER, gr_researcher.compile())
 builder.add_node(RELEVANCE_GENERATOR, relevance_generator)
 builder.add_node(SAVE_RESEARCH_REPORT, save_research_report)
 
-
-
-
-
 builder.add_edge(START, PREPARE_RETRIEVER_QUESTION)
 builder.add_edge(PREPARE_RETRIEVER_QUESTION, RETRIEVE)
 builder.add_edge(RETRIEVE, GRADE_DOCUMENTS)
@@ -129,7 +110,6 @@ builder.add_conditional_edges(
         RESEARCH_TOPIC_GENERATOR: RESEARCH_TOPIC_GENERATOR,
         END: END
     }
-    
 )
 builder.add_edge(RESEARCH_TOPIC_GENERATOR, OBS_FIELD_RESEARCHER)
 builder.add_edge(OBS_FIELD_RESEARCHER, SAVE_RESEARCH_REPORT)
@@ -150,12 +130,6 @@ def stream_graph_updates(user_input):
         print(event)
 
     state = graph.get_state(thread)
-    print("---------------------")
-    print(state)
-    print("---------------------")
-    print(state.next)
-    print(state.tasks)
-
     if state.next == ('researcher_choice',) :
         # if state["is_research_needed"] == True:
         #     print("<<ALERT>>!!!: You have already run the research but failed to get any information. This is a research re-run")
@@ -176,7 +150,7 @@ def stream_graph_updates(user_input):
         )
 
         for event in graph.stream(None, thread, stream_mode="values"):
-                print(event)
+            print(event)
 
 # # while True:
 # try:
