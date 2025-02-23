@@ -137,6 +137,9 @@ Elastic search connectors offers Elastic connectors to sync the data from a vari
 
 - Follow the steps to [connect AI assistant with search connector](https://www.elastic.co/guide/en/observability/current/obs-ai-assistant.html#obs-ai-search-connectors) and perform the sync operation.
 
+## Langgraph data flow
+<img width="843" alt="image" src="https://github.com/user-attachments/assets/88669612-6369-4c35-8529-9934d0f9d0ef" />
+
 ## Troubleshooting
 
 ### Connectivity issue
